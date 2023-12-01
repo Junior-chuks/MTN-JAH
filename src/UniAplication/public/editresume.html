@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>High School Report Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffcc29; /* MTN yellow */
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .form-group {
+      text-align: left;
+      margin: 10px 0;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #333; /* Dark border */
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .subject-group {
+      margin: 10px 0;
+    }
+
+    .subject-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .subject-table th, .subject-table td {
+      border: 1px solid #333;
+      padding: 8px;
+      text-align: left;
+    }
+
+    button[type="submit"] {
+      background-color: #ffcc29; /* MTN yellow */
+      color: #333; /* Dark text */
+      border: none;
+      border-radius: 4px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #ffc600; /* Slightly darker MTN yellow on hover */
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+  <h2>High School Report Form</h2>
+  <form id="schoolForm" action="javascript:void(0);" method="post">
+    <div class="form-group">
+      <label for="examNumber">Exam Number:</label>
+      <input type="text" id="examNumber" name="examNumber" required>
+    </div>
+    <div class="form-group">
+      <label for="studentName">Student's Name:</label>
+      <input type="text" id="studentName" name="studentName" required>
+    </div>
+    <div class="form-group">
+      <label for="grade">Grade:</label>
+      <input type="number" id="grade" name="grade" required>
+    </div>
+    <div class="form-group">
+      <label for="schoolName">School Name:</label>
+      <input type="text" id="schoolName" name="schoolName" required>
+    </div>
+    <div class="form-group">
+      <label for="reportYear">Report Year:</label>
+      <input type="number" id="reportYear" name="reportYear" required>
+    </div>
+    <h3>Subjects & Grades</h3>
+    <table class="subject-table">
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Grade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows for Subject 1 to 8 -->
+        <tr>
+          <td><input type="text" name="subject1"></td>
+          <td><input type="text" name="grade1"></td>
+        </tr>
+        <tr>
+          <td><input type="text" name="subject2"></td>
+          <td><input type="text" name="grade2"></td>
+        </tr>
+        <tr>
+          <td><input type="text" name="subject3"></td>
+          <td><input type="text" name="grade3"></td>
+        </tr>
+        <tr>
+          <td><input type="text" name="subject4"></td>
+          <td><input type="text" name="grade4"></td>
+        </tr>
+        <tr>
+          <td><input type="text" name="subject5"></td>
+          <td><input type="text" name="grade5"></td>
+        </tr>
+        <tr>
+          <td><input type="text" name="subject6"></td>
+          <td><input type="text" name="grade6"></td>
+        </tr>
+        <tr>
+          <td><input type="text" name="subject7"></td>
+          <td><input type="text" name="grade7"></td>
+        </tr>
+        <tr>
+          <td><input type="text" name="subject8"></td>
+          <td><input type="text" name="grade8"></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="form-group">
+      <label for="teacherComments">Teacher's Comments:</label>
+      <textarea id="teacherComments" name="teacherComments" rows="4"></textarea>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<script>
+  document.getElementById('schoolForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent the default form submission
+    window.location.href = 'viewjobs.html'; // Redirect to viewjob.html
+  });
+</script>
+</body>
+</html>

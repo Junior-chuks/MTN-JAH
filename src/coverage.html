@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Place Coverage Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 400px;
+        }
+        .custom-icon {
+    width: 25px;
+    height: 40px;
+    text-align: center;
+}
+
+.pin {
+    width: 16px;
+    height: 16px;
+    border: 2px solid white;
+    border-radius: 50%;
+    position: relative;
+    transform: translate(-50%, -100%);
+}
+
+    </style>
+
+    <!-- Include Leaflet CSS and JavaScript -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+</head>
+<body>
+<div class="container">
+    <h1>Place Coverage Checker</h1>
+    <input type="text" id="locationInput" placeholder="Enter a place">
+    <button id="searchButton">Search</button>
+    <button id="dropPinButton">Drop a Pin</button>
+    <div id="coverageResult">
+        <h2>Coverage Result</h2>
+        <p id="resultText">Coverage information will be displayed here.</p>
+    </div>
+</div>
+
+<!-- Create a div for the map -->
+<div id="map"></div>
+
+<script>
+    // Define the map and its initial view
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    // Add an OpenStreetMap tile layer
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    // Define predefined locations with coverage information
+  // Define predefined locations with coverage information
+var locations = [
+    { name: "Durban", latlng: [-29.861825, 31.027375], coverage: "High Coverage" },
+    { name: "Umhlanga", latlng: [-29.726309, 31.084123], coverage: "Medium Coverage" },
+    { name: "Amanzimtoti", latlng: [-30.059771, 30.883084], coverage: "Low Coverage" },
+    { name: "Pinetown", latlng: [-29.813342, 30.871925], coverage: "High Coverage" },
+    { name: "Ballito", latlng: [-29.529429, 31.213508], coverage: "Medium Coverage" },
+    { name: "ZOLA", latlng: [-29.529429, 31.213508], coverage: "Medium Coverage" },
+    { name: "PMB", latlng: [-29.529429, 31.213508], coverage: "Medium Coverage" },
+    // Add more Durban cities with their latitude, longitude, and coverage here
+];
+
+        // Add more locations here
+    
+
+
+
+    // Function to create markers for predefined locations
+    function createMarkers() {
+        locations.forEach(function(location) {
+            var marker = L.marker(location.latlng).addTo(map);
+            marker.bindPopup(`<b>${location.name}</b><br>Coverage: ${location.coverage}`);
+        });
+    }
+
+    createMarkers();
+
+    // Function to display coverage information for a searched location
+    document.getElementById("searchButton").addEventListener("click", function() {
+        var locationInput = document.getElementById("locationInput").value;
+        var resultText = document.getElementById("resultText");
+
+        // Find the matching location and display coverage
+        var location = locations.find(function(item) {
+            return item.name.toLowerCase() === locationInput.toLowerCase();
+        });
+
+        if (location) {
+            resultText.textContent = `Coverage information for "${location.name}": ${location.coverage}`;
+            // Center the map on the searched location
+            map.setView(location.latlng, 13);
+        } else {
+            resultText.textContent = `Coverage information for "${locationInput}" is not available.`;
+        }
+    });
+
+    // Function to handle the "Drop a Pin" button click
+    document.getElementById("dropPinButton").addEventListener("click", function() {
+        // Allow the user to drop a pin on the map and generate random coverage
+        var coverageOptions = ["High Coverage", "Medium Coverage", "Low Coverage", "No Coverage"];
+
+        map.on('click', function(e) {
+            var randomCoverage = coverageOptions[Math.floor(Math.random() * coverageOptions.length)];
+            L.marker(e.latlng).addTo(map)
+                .bindPopup(`Coverage: ${randomCoverage}`)
+                .openPopup();
+        });
+    });
+    // Function to create markers for predefined locations with different pin colors based on coverage
+function createMarkers() {
+    locations.forEach(function(location) {
+        var pinColor;
+        if (location.coverage === "High Coverage") {
+            pinColor = "red";
+        } else if (location.coverage === "Medium Coverage") {
+            pinColor = "orange";
+        } else if (location.coverage === "Low Coverage") {
+            pinColor = "blue";
+        } else {
+            pinColor = "black"; // Default pin color
+        }
+
+        var marker = L.marker(location.latlng, { icon: L.divIcon({ className: 'custom-icon', html: `<div style="background-color: ${pinColor}" class="pin"></div>` }) }).addTo(map);
+
+        marker.bindPopup(`<b>${location.name}</b><br>Coverage: ${location.coverage}`);
+    });}
+</script>
+</body>
+</html>
